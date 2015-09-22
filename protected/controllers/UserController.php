@@ -50,6 +50,11 @@ class UserController extends Controller {
             ResponseHelper::JsonReturnError("", "Server Error");
         }
     }
+    
+    public function actionInput()
+    {
+        $this->render('input');
+    }
 
     // Uncomment the following methods and override them if needed
     /*
