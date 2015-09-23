@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">   
         <meta name="language" content="en">
 
+        
      <!-- Bootstrap -->
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/bootstrap.min.css">
 	<!-- Bootstrap responsive -->
@@ -43,32 +44,70 @@
 	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/bootstrap.min.js"></script>
 	<!-- Bootbox -->
 	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/bootbox/jquery.bootbox.js"></script>
-	<!-- dataTables -->
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/jquery.dataTables.min.js"></script>
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/TableTools.min.js"></script>
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/ColReorderWithResize.js"></script>
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/ColVis.min.js"></script>
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/datatable/jquery.dataTables.grouping.js"></script>
-	<!-- Chosen -->
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chosen/chosen.jquery.min.js"></script>
+	
+       
 
-	<!-- Theme framework -->
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/eakroko.min.js"></script>
-	<!-- Theme scripts -->
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/application.min.js"></script>
-	<!-- Just for demonstration -->
-	<script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/demonstration.min.js"></script>
-         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/angular.js"></script>
-   
 
-        <title>Quản lý sách thư viện</title>
+        <title>Nhập liệu meboo</title>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '<?php echo Yii::app()->params['fb_app_id'] ?>',
+                    xfbml: true,
+                    version: 'v2.4'
+                });
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
+                        console.log('Logged in.');
+                    }
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.4&appId=1493872717557948";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
 
+
+// Only works after `FB.init` is called
+            function myFacebookLogin() {
+                FB.login(function () {
+                    FB.api('/me?fields=id,name,email,picture,first_name, last_name, gender, link, age_range, address, birthday, locale', function (response) {
+                        //console.log(response);
+                        $.ajax({
+                            url: '<?php echo Yii::app()->createUrl('user/LoginWithFacebook') ?>',
+                            type: 'POST',
+                            data: {
+                                facebook_id: response.id,
+                                gender: response.gender,
+                                name: response.name,
+                                email: response.email,
+                                location: response.locale,
+                                birthday: response.birthday,
+                                photo: response.picture.data.url,
+                            },
+                            success: function (response) {
+
+                            },
+                        });
+                    });
+                }, {scope: 'publish_actions, public_profile, email'});
+            }
+
+            function myFacebookLogout() {
+                FB.logout(function (response) {
+                    // user is now logged out
+                });
+            }
+        </script>
     </head>
 
     <body> 
 
-    <body>
 
         <!-- BEGIN -->
         <div class="container">

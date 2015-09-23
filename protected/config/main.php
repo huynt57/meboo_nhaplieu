@@ -71,6 +71,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
+        'fb_app_id' => '939333119461673'
     ),
     'theme' => 'classic'
 );

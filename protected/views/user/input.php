@@ -1,5 +1,13 @@
 <div class="row-fluid">
     <div class="span12">
+        <div class="alert alert-success" id="ss">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Thành công!</strong> Dữ liệu đã được thêm thành công
+        </div>
+        <div class="alert alert-error" id="err">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Lỗi !</strong> Đã có lỗi nhập liệu xảy ra, vui lòng thử lại sau
+        </div>
         <div class="box">
             <div class="box-title">
                 <h3>
@@ -15,7 +23,7 @@
                             <input type="text" name="name" id="name" class="input-xlarge" data-rule-required="true" data-rule-minlength="2">
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group">
                         <label for="address" class="control-label">Địa chỉ</label>
                         <div class="controls">
                             <input type="text" name="address" id="address" class="input-xlarge" data-rule-email="true" data-rule-required="true">
@@ -45,15 +53,15 @@
                             <input type="text" name="register_number" id="register_number" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="control-group">
                         <label for="description" class="control-label">Thông tin bổ sung, miêu tả</label>
                         <div class="controls">
                             <textarea name="description" id="description" class="input-xlarge" data-rule-email="true" data-rule-required="true"></textarea>
                         </div>
                     </div>
-                                     
+
                     <div class="form-actions">
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <button type="button" class="btn">Cancel</button>
@@ -64,19 +72,31 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        var data = $('#bb').serialize();
-        $('$bb').submit(function(e) {
+    $(document).ready(function () {
+        $('#ss').hide();
+        $('#err').hide();
+
+        $('#bb').submit(function (e) {
+            var data = $('#bb').serialize();
             e.preventDefault();
             $.ajax({
-                url: '<?php echo Yii::app()->createUrl('user/addDoctor')?>',
+                beforeSend: function () {
+                    $('#ss').hide();
+                    $('#err').hide();
+                },
+                url: '<?php echo Yii::app()->createUrl('user/addDoctor') ?>',
                 type: 'POST',
                 data: data,
-                success: function(response)
+                success: function (response)
                 {
-                    console.log(response);
+                    if (response.status == 1)
+                    {
+                        $('#ss').show();
+                    }
+                    else {
+                        $('#err').show();
+                    }
                 },
-                
             });
         });
     });

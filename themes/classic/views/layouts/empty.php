@@ -109,7 +109,62 @@
         <!-- Just for demonstration -->
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/demonstration.min.js"></script>  
 
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        <title>Đăng nhập meboo</title>
+         <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '<?php echo Yii::app()->params['fb_app_id'] ?>',
+                    xfbml: true,
+                    version: 'v2.4'
+                });
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
+                        console.log('Logged in.');
+                    }
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.4&appId=1493872717557948";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+
+// Only works after `FB.init` is called
+            function myFacebookLogin() {
+                FB.login(function () {
+                    FB.api('/me?fields=id,name,email,picture,first_name, last_name, gender, link, age_range, address, birthday, locale', function (response) {
+                        //console.log(response);
+                        $.ajax({
+                            url: '<?php echo Yii::app()->createUrl('user/LoginWithFacebook') ?>',
+                            type: 'POST',
+                            data: {
+                                facebook_id: response.id,
+                                gender: response.gender,
+                                name: response.name,
+                                email: response.email,
+                                location: response.locale,
+                                birthday: response.birthday,
+                                photo: response.picture.data.url,
+                            },
+                            success: function (response) {
+
+                            },
+                        });
+                    });
+                }, {scope: 'publish_actions, public_profile, email'});
+            }
+
+            function myFacebookLogout() {
+                FB.logout(function (response) {
+                    // user is now logged out
+                });
+            }
+        </script>
     </head>
 
     <?php echo $content; ?>
