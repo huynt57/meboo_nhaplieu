@@ -5,17 +5,14 @@ class UserController extends Controller {
     public function actionIndex() {
         $this->render('index');
     }
-    
-    public function checkLogin()
-    {
-        if(empty(Yii::app()->session['user_id']))
-        {
+
+    public function checkLogin() {
+        if (empty(Yii::app()->session['user_id'])) {
             $this->redirect(Yii::app()->createUrl('user/login'));
         }
     }
-    
-    public function actionLogin()
-    {
+
+    public function actionLogin() {
         $this->layout = "empty";
         $this->render('login');
     }
@@ -38,22 +35,21 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
-    
-    public function actionAddDoctor()
-    {
+
+    public function actionAddDoctor() {
         $attr = StringHelper::filterArrayString($_POST);
         $model = new Doctor();
         $model->setAttributes($attr);
-        if($model->save(FALSE))
-        {
+        $model->created_at = time();
+        $model->updated_at = time();
+        if ($model->save(FALSE)) {
             ResponseHelper::JsonReturnSuccess("", "Success");
         } else {
             ResponseHelper::JsonReturnError("", "Server Error");
         }
     }
-    
-    public function actionInput()
-    {
+
+    public function actionInput() {
         $this->render('input');
     }
 
