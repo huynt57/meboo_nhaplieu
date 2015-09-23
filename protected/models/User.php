@@ -12,7 +12,7 @@ class User extends BaseUser {
         $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
 
         if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $facebook_id != NULL) {
-            $user_exist_facebook->updated_at = time();
+            $user_exist_facebook->last_updated = time();
             if ($user_exist_facebook->save(FALSE)) {
                 Yii::app()->session['user_id'] = $user_exist_facebook->user_id;
                 ResponseHelper::JsonReturnSuccess($user_exist_facebook, "Success");
@@ -31,6 +31,7 @@ class User extends BaseUser {
             $model->photo = $photo;
             $model->email = $email;
             $model->name = $name;
+            $model->last_updated = time();
             if ($model->save(FALSE)) {
                 Yii::app()->session['user_id'] = $model->user_id;
                 ResponseHelper::JsonReturnSuccess($model, "Success");

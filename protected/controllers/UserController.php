@@ -16,6 +16,7 @@ class UserController extends Controller {
     
     public function actionLogin()
     {
+        $this->layout = "empty";
         $this->render('login');
     }
 
