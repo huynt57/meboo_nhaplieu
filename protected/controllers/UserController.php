@@ -2,6 +2,10 @@
 
 class UserController extends Controller {
 
+    public function beforeController($action)
+    {
+        $this->checkLogin();
+    }
     public function actionIndex() {
         $this->render('index');
     }
