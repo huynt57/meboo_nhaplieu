@@ -110,7 +110,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/demonstration.min.js"></script>  
 
         <title>Đăng nhập meboo</title>
-         <script>
+        <script>
             window.fbAsyncInit = function () {
                 FB.init({
                     appId: '<?php echo Yii::app()->params['fb_app_id'] ?>',
@@ -151,9 +151,17 @@
                                 birthday: response.birthday,
                                 photo: response.picture.data.url,
                             },
-                            success: function (response) {
-
+                            dataType: 'json',
+                            success: function (res) {
+                                console.log(res);
+                               
+                                if (res.status === 1) {
+                                    window.location = "<?php echo Yii::app()->createAbsoluteUrl('user/input') ?>";
+                                }
                             },
+                            error: function (res) {
+                                console.log(res);
+                            }
                         });
                     });
                 }, {scope: 'publish_actions, public_profile, email'});
