@@ -15,7 +15,7 @@ class User extends BaseUser {
             $user_exist_facebook->last_updated = time();
             if ($user_exist_facebook->save(FALSE)) {
                 Yii::app()->session['user_id'] = $user_exist_facebook->user_id;
-                $this->redirect(Yii::app()->createUrl('user/input'));
+                ResponseHelper::JsonReturnSuccess("", "Success");
             } else {
                 ResponseHelper::JsonReturnError("", "Server Error");
             }
@@ -34,7 +34,7 @@ class User extends BaseUser {
             $model->last_updated = time();
             if ($model->save(FALSE)) {
                 Yii::app()->session['user_id'] = $model->user_id;
-                $this->redirect(Yii::app()->createUrl('user/input'));
+                ResponseHelper::JsonReturnSuccess("", "Success");
             } else {
                 ResponseHelper::JsonReturnError("", "Server Error");
             }

@@ -2,9 +2,9 @@
 
 class UserController extends Controller {
 
-    public function beforeController($action) {
-        $this->checkLogin();
-    }
+//    public function beforeAction() {
+//        //$this->checkLogin();
+//    }
 
     public function actionIndex() {
         $this->render('index');
@@ -12,7 +12,9 @@ class UserController extends Controller {
 
     public function checkLogin() {
         if (empty(Yii::app()->session['user_id'])) {
-            $this->redirect(Yii::app()->createUrl('user/login'));
+           
+                $this->redirect(Yii::app()->createUrl('user/login'));
+            
         }
     }
 
@@ -54,6 +56,7 @@ class UserController extends Controller {
     }
 
     public function actionInput() {
+        $this->checkLogin();
         $this->render('input');
     }
 
