@@ -87,9 +87,10 @@
                 url: '<?php echo Yii::app()->createUrl('user/addDoctor') ?>',
                 type: 'POST',
                 data: data,
+                dataType: 'json',
                 success: function (response)
                 {
-                    if (response.status == 1)
+                    if (response.status === 1)
                     {
                         $('#ss').show();
                     }

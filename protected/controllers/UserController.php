@@ -42,7 +42,7 @@ class UserController extends Controller {
 
     public function actionAddDoctor() {
         $attr = StringHelper::filterArrayString($_POST);
-        $model = new Doctor();
+        $model = new Doctors();
         $model->setAttributes($attr);
         $model->created_at = time();
         $model->updated_at = time();
