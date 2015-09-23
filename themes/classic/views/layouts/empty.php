@@ -154,10 +154,11 @@
                             dataType: 'json',
                             success: function (res) {
                                 console.log(res);
-                               
+
                                 if (res.status === 1) {
                                     window.location = "<?php echo Yii::app()->createAbsoluteUrl('user/input') ?>";
-                                }
+                                } else {
+                                     window.location = "<?php echo Yii::app()->createAbsoluteUrl('user/login') ?>";
                             },
                             error: function (res) {
                                 console.log(res);
