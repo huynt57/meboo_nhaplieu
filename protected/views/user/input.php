@@ -29,6 +29,17 @@
                             <input type="text" name="address" id="address" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
+<!--                    <div class="control-group">
+                        <label for="city" class="control-label">Tỉnh thành</label>
+                        <div class="controls">
+                            <select>
+                                <option value="volvo">Volvo</option>
+                                <option value="saab">Saab</option>
+                                <option value="mercedes">Mercedes</option>
+                                <option value="audi">Audi</option>
+                            </select>
+                        </div>
+                    </div>-->
                     <div class="control-group">
                         <label for="specialist" class="control-label">Chuyên khoa</label>
                         <div class="controls">
@@ -93,9 +104,11 @@
                     if (response.status === 1)
                     {
                         $('#ss').show();
+                        $("#bb").trigger('reset'); //jquery
                     }
                     else {
                         $('#err').show();
+                        $("#bb").trigger('reset'); //jquery
                     }
                 },
             });
