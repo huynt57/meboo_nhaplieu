@@ -22,6 +22,9 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
+ * @property integer $ward
+ * @property integer $district
+ * @property integer $province
  *
  */
 abstract class BaseDoctors extends GxActiveRecord {
@@ -44,12 +47,12 @@ abstract class BaseDoctors extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('status, created_at, updated_at', 'numerical', 'integerOnly'=>true),
+			array('status, created_at, updated_at, ward, district, province', 'numerical', 'integerOnly'=>true),
 			array('lat, lng', 'numerical'),
 			array('phone, email, specialist, register_number', 'length', 'max'=>255),
 			array('name, address, description', 'safe'),
-			array('name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng', 'safe', 'on'=>'search'),
+			array('name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +81,9 @@ abstract class BaseDoctors extends GxActiveRecord {
 			'updated_at' => Yii::t('app', 'Updated At'),
 			'lat' => Yii::t('app', 'Lat'),
 			'lng' => Yii::t('app', 'Lng'),
+			'ward' => Yii::t('app', 'Ward'),
+			'district' => Yii::t('app', 'District'),
+			'province' => Yii::t('app', 'Province'),
 		);
 	}
 
@@ -97,6 +103,9 @@ abstract class BaseDoctors extends GxActiveRecord {
 		$criteria->compare('updated_at', $this->updated_at);
 		$criteria->compare('lat', $this->lat);
 		$criteria->compare('lng', $this->lng);
+		$criteria->compare('ward', $this->ward);
+		$criteria->compare('district', $this->district);
+		$criteria->compare('province', $this->province);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

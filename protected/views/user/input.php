@@ -29,6 +29,24 @@
                             <input type="text" name="address" id="address" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
+                     <div class="control-group">
+                        <label for="ward" class="control-label">Phường xã</label>
+                        <div class="controls">
+                            
+                        </div>
+                    </div>
+                     <div class="control-group">
+                        <label for="district" class="control-label">Quận huyện</label>
+                        <div class="controls">
+                            
+                        </div>
+                    </div>
+                     <div class="control-group">
+                        <label for="province" class="control-label">Thành phố</label>
+                        <div class="controls">
+                            
+                        </div>
+                    </div>
 <!--                    <div class="control-group">
                         <label for="city" class="control-label">Tỉnh thành</label>
                         <div class="controls">
