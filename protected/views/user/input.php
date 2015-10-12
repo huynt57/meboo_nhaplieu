@@ -29,35 +29,50 @@
                             <input type="text" name="address" id="address" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group">
                         <label for="ward" class="control-label">Phường xã</label>
                         <div class="controls">
-                            
+
+                            <select name="ward">
+                                <?php foreach ($ward as $item): ?>
+                                    <option value="<?php echo $item->wardid ?>"><?php echo $item->name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
                         </div>
                     </div>
-                     <div class="control-group">
+                    <input type="hidden" value="<?php echo Yii::app()->session['user_id']?>" name="user_id">
+                    <div class="control-group">
                         <label for="district" class="control-label">Quận huyện</label>
                         <div class="controls">
-                            
-                        </div>
-                    </div>
-                     <div class="control-group">
-                        <label for="province" class="control-label">Thành phố</label>
-                        <div class="controls">
-                            
-                        </div>
-                    </div>
-<!--                    <div class="control-group">
-                        <label for="city" class="control-label">Tỉnh thành</label>
-                        <div class="controls">
-                            <select>
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
+                            <select name="district">
+                                <?php foreach ($district as $item): ?>
+                                    <option value="<?php echo $item->districtid ?>"><?php echo $item->name ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
-                    </div>-->
+                    </div>
+                    <div class="control-group">
+                        <label for="province" class="control-label">Thành phố</label>
+                        <div class="controls">
+                            <select name="province">
+                                <?php foreach ($province as $item): ?>
+                                    <option value="<?php echo $item->provinceid ?>"><?php echo $item->name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!--                    <div class="control-group">
+                                            <label for="city" class="control-label">Tỉnh thành</label>
+                                            <div class="controls">
+                                                <select>
+                                                    <option value="volvo">Volvo</option>
+                                                    <option value="saab">Saab</option>
+                                                    <option value="mercedes">Mercedes</option>
+                                                    <option value="audi">Audi</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
                     <div class="control-group">
                         <label for="specialist" class="control-label">Chuyên khoa</label>
                         <div class="controls">

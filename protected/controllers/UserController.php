@@ -12,9 +12,8 @@ class UserController extends Controller {
 
     public function checkLogin() {
         if (empty(Yii::app()->session['user_id'])) {
-           
-                $this->redirect(Yii::app()->createUrl('user/login'));
-            
+
+            $this->redirect(Yii::app()->createUrl('user/login'));
         }
     }
 
@@ -57,7 +56,10 @@ class UserController extends Controller {
 
     public function actionInput() {
         $this->checkLogin();
-        $this->render('input');
+        $ward = Ward::model()->findAll();
+        $district = District::model()->findAll();
+        $province = Province::model()->findAll();
+        $this->render('input', array('ward' => $ward, 'district' => $district, 'province' => $province));
     }
 
     // Uncomment the following methods and override them if needed

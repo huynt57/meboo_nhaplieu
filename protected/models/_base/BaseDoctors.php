@@ -22,93 +22,98 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
- * @property integer $ward
- * @property integer $district
- * @property integer $province
+ * @property string $ward
+ * @property string $district
+ * @property string $province
+ * @property integer $user_id
  *
  */
 abstract class BaseDoctors extends GxActiveRecord {
 
-	public static function model($className=__CLASS__) {
-		return parent::model($className);
-	}
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	public function tableName() {
-		return 'tbl_doctors';
-	}
+    public function tableName() {
+        return 'tbl_doctors';
+    }
 
-	public static function label($n = 1) {
-		return Yii::t('app', 'Doctors|Doctors', $n);
-	}
+    public static function label($n = 1) {
+        return Yii::t('app', 'Doctors|Doctors', $n);
+    }
 
-	public static function representingColumn() {
-		return 'name';
-	}
+    public static function representingColumn() {
+        return 'name';
+    }
 
-	public function rules() {
-		return array(
-			array('status, created_at, updated_at, ward, district, province', 'numerical', 'integerOnly'=>true),
-			array('lat, lng', 'numerical'),
-			array('phone, email, specialist, register_number', 'length', 'max'=>255),
-			array('name, address, description', 'safe'),
-			array('name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'safe', 'on'=>'search'),
-		);
-	}
+    public function rules() {
+        return array(
+            array('status, created_at, updated_at, user_id', 'numerical', 'integerOnly' => true),
+            array('lat, lng', 'numerical'),
+            array('phone, email, specialist, register_number', 'length', 'max' => 255),
+            array('ward, district, province', 'length', 'max' => 11),
+            array('name, address, description', 'safe'),
+            array('name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province, user_id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	public function relations() {
-		return array(
-		);
-	}
+    public function relations() {
+        return array(
+        );
+    }
 
-	public function pivotModels() {
-		return array(
-		);
-	}
+    public function pivotModels() {
+        return array(
+        );
+    }
 
-	public function attributeLabels() {
-		return array(
-			'id' => Yii::t('app', 'ID'),
-			'name' => Yii::t('app', 'Name'),
-			'address' => Yii::t('app', 'Address'),
-			'status' => Yii::t('app', 'Status'),
-			'phone' => Yii::t('app', 'Phone'),
-			'email' => Yii::t('app', 'Email'),
-			'specialist' => Yii::t('app', 'Specialist'),
-			'register_number' => Yii::t('app', 'Register Number'),
-			'description' => Yii::t('app', 'Description'),
-			'created_at' => Yii::t('app', 'Created At'),
-			'updated_at' => Yii::t('app', 'Updated At'),
-			'lat' => Yii::t('app', 'Lat'),
-			'lng' => Yii::t('app', 'Lng'),
-			'ward' => Yii::t('app', 'Ward'),
-			'district' => Yii::t('app', 'District'),
-			'province' => Yii::t('app', 'Province'),
-		);
-	}
+    public function attributeLabels() {
+        return array(
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'address' => Yii::t('app', 'Address'),
+            'status' => Yii::t('app', 'Status'),
+            'phone' => Yii::t('app', 'Phone'),
+            'email' => Yii::t('app', 'Email'),
+            'specialist' => Yii::t('app', 'Specialist'),
+            'register_number' => Yii::t('app', 'Register Number'),
+            'description' => Yii::t('app', 'Description'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'lat' => Yii::t('app', 'Lat'),
+            'lng' => Yii::t('app', 'Lng'),
+            'ward' => Yii::t('app', 'Ward'),
+            'district' => Yii::t('app', 'District'),
+            'province' => Yii::t('app', 'Province'),
+            'user_id' => Yii::t('app', 'User'),
+        );
+    }
 
-	public function search() {
-		$criteria = new CDbCriteria;
+    public function search() {
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
-		$criteria->compare('name', $this->name, true);
-		$criteria->compare('address', $this->address, true);
-		$criteria->compare('status', $this->status);
-		$criteria->compare('phone', $this->phone, true);
-		$criteria->compare('email', $this->email, true);
-		$criteria->compare('specialist', $this->specialist, true);
-		$criteria->compare('register_number', $this->register_number, true);
-		$criteria->compare('description', $this->description, true);
-		$criteria->compare('created_at', $this->created_at);
-		$criteria->compare('updated_at', $this->updated_at);
-		$criteria->compare('lat', $this->lat);
-		$criteria->compare('lng', $this->lng);
-		$criteria->compare('ward', $this->ward);
-		$criteria->compare('district', $this->district);
-		$criteria->compare('province', $this->province);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('address', $this->address, true);
+        $criteria->compare('status', $this->status);
+        $criteria->compare('phone', $this->phone, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('specialist', $this->specialist, true);
+        $criteria->compare('register_number', $this->register_number, true);
+        $criteria->compare('description', $this->description, true);
+        $criteria->compare('created_at', $this->created_at);
+        $criteria->compare('updated_at', $this->updated_at);
+        $criteria->compare('lat', $this->lat);
+        $criteria->compare('lng', $this->lng);
+        $criteria->compare('ward', $this->ward, true);
+        $criteria->compare('district', $this->district, true);
+        $criteria->compare('province', $this->province, true);
+        $criteria->compare('user_id', $this->user_id);
 
-		return new CActiveDataProvider($this, array(
-			'criteria' => $criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
 }

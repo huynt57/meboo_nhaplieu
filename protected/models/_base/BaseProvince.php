@@ -9,8 +9,9 @@
  * Columns in table "tbl_province" available as properties of the model,
  * and there are no model relations.
  *
- * @property integer $id
- * @property string $province
+ * @property string $provinceid
+ * @property string $name
+ * @property string $type
  *
  */
 abstract class BaseProvince extends GxActiveRecord {
@@ -28,14 +29,16 @@ abstract class BaseProvince extends GxActiveRecord {
 	}
 
 	public static function representingColumn() {
-		return 'province';
+		return 'name';
 	}
 
 	public function rules() {
 		return array(
-			array('province', 'safe'),
-			array('province', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, province', 'safe', 'on'=>'search'),
+			array('provinceid, name, type', 'required'),
+			array('provinceid', 'length', 'max'=>5),
+			array('name', 'length', 'max'=>100),
+			array('type', 'length', 'max'=>30),
+			array('provinceid, name, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,16 +54,18 @@ abstract class BaseProvince extends GxActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'id' => Yii::t('app', 'ID'),
-			'province' => Yii::t('app', 'Province'),
+			'provinceid' => Yii::t('app', 'Provinceid'),
+			'name' => Yii::t('app', 'Name'),
+			'type' => Yii::t('app', 'Type'),
 		);
 	}
 
 	public function search() {
 		$criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
-		$criteria->compare('province', $this->province, true);
+		$criteria->compare('provinceid', $this->provinceid, true);
+		$criteria->compare('name', $this->name, true);
+		$criteria->compare('type', $this->type, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
