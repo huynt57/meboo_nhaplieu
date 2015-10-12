@@ -30,38 +30,36 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="ward" class="control-label">Phường xã</label>
-                        <div class="controls">
-
-                            <select name="ward">
-                                <?php foreach ($ward as $item): ?>
-                                    <option value="<?php echo $item->wardid ?>"><?php echo $item->name ?></option>
-                                <?php endforeach; ?>
-                            </select>
-
-                        </div>
-                    </div>
-                    <input type="hidden" value="<?php echo Yii::app()->session['user_id']?>" name="user_id">
-                    <div class="control-group">
-                        <label for="district" class="control-label">Quận huyện</label>
-                        <div class="controls">
-                            <select name="district">
-                                <?php foreach ($district as $item): ?>
-                                    <option value="<?php echo $item->districtid ?>"><?php echo $item->name ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
                         <label for="province" class="control-label">Thành phố</label>
                         <div class="controls">
-                            <select name="province">
+                            <select name="province" id="province">
                                 <?php foreach ($province as $item): ?>
                                     <option value="<?php echo $item->provinceid ?>"><?php echo $item->name ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label for="district" class="control-label">Quận huyện</label>
+                        <div class="controls">
+                            <select name="district" id="district">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="ward" class="control-label">Phường xã</label>
+                        <div class="controls">
+
+                            <select name="ward" id="ward">
+                               
+                            </select>
+
+                        </div>
+                    </div>
+                    <input type="hidden" value="<?php echo Yii::app()->session['user_id'] ?>" name="user_id">
+
+
                     <!--                    <div class="control-group">
                                             <label for="city" class="control-label">Tỉnh thành</label>
                                             <div class="controls">
@@ -146,5 +144,63 @@
                 },
             });
         });
+    });
+
+    $(document).ready(function () {
+        $(document).on('change', '#province', function (e) {
+            e.preventDefault();
+            var province_id = $(this).val();
+            if (province_id !== '') {
+                $.ajax({
+                    beforeSend: function (xhr) {
+                        $('#district').empty();
+                        $('#ward').empty();
+                    },
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createUrl('user/getDistrictByProvince') ?>',
+                    dataType: 'json',
+                    data: {province_id: province_id},
+                    success: function (response)
+                    {
+                        var cnt = Object.keys(response).length;
+                        if (cnt > 1) {
+                            $.each(response, function (key, value) {
+                                var html = '<option value="' + this.districtid + '">' + this.name + '</option>';
+                                $('#district').append(html);
+
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        
+        $(document).on('change', '#district', function (e) {
+            e.preventDefault();
+            var district_id = $(this).val();
+            if (district_id !== '') {
+                $.ajax({
+                    beforeSend: function (xhr) {
+                        $('#ward').empty();
+                    },
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createUrl('user/getWardByDistrict') ?>',
+                    dataType: 'json',
+                    data: {district_id: district_id},
+                    success: function (response)
+                    {
+                        var cnt = Object.keys(response).length;
+                        if (cnt > 1) {
+                            $.each(response, function (key, value) {
+                                var html = '<option value="' + this.wardid + '">' + this.name + '</option>';
+                                $('#ward').append(html);
+
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
     });
 </script>

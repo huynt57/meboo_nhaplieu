@@ -54,6 +54,20 @@ class UserController extends Controller {
         }
     }
 
+    public function actionGetDistrictByProvince() {
+        $request = Yii::app()->request;
+        $province_id = $request->getPost('province_id');
+        $data = District::model()->findAllByAttributes(array('provinceid' => $province_id));
+        echo CJSON::encode($data);
+    }
+
+    public function actionGetWardByDistrict() {
+        $request = Yii::app()->request;
+        $district_id = $request->getPost('district_id');
+        $data = Ward::model()->findAllByAttributes(array('districtid' => $district_id));
+        echo CJSON::encode($data);
+    }
+
     public function actionInput() {
         $this->checkLogin();
         $ward = Ward::model()->findAll();
