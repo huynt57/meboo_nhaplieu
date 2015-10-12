@@ -33,6 +33,7 @@
                         <label for="province" class="control-label">Thành phố</label>
                         <div class="controls">
                             <select name="province" id="province">
+                                <option value="">Vui lòng chọn</option>
                                 <?php foreach ($province as $item): ?>
                                     <option value="<?php echo $item->provinceid ?>"><?php echo $item->name ?></option>
                                 <?php endforeach; ?>
@@ -52,7 +53,7 @@
                         <div class="controls">
 
                             <select name="ward" id="ward">
-                               
+
                             </select>
 
                         </div>
@@ -86,13 +87,27 @@
                     <div class="control-group">
                         <label for="email" class="control-label">Email</label>
                         <div class="controls">
-                            <input type="text" name="email" id="email" class="input-xlarge" data-rule-email="true" data-rule-required="true">
+                            <input type="email" name="email" id="email" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="register_number" class="control-label">Số đăng ký khám chữa bệnh</label>
                         <div class="controls">
                             <input type="text" name="register_number" id="register_number" class="input-xlarge" data-rule-email="true" data-rule-required="true">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="lat" class="control-label">Lat</label>
+                        <div class="controls">
+                            <input type="text" name="lat" id="lat" class="input-xlarge" data-rule-email="true" data-rule-required="true">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="lng" class="control-label">Lng</label>
+                        <div class="controls">
+                            <input type="text" name="lng" id="lng" class="input-xlarge" data-rule-email="true" data-rule-required="true">
                         </div>
                     </div>
 
@@ -154,7 +169,10 @@
                 $.ajax({
                     beforeSend: function (xhr) {
                         $('#district').empty();
+
                         $('#ward').empty();
+                        $('#district').append('<option value = "">Vui lòng chọn</option>');
+                        $('#ward').append('<option value = "">Vui lòng chọn</option>');
                     },
                     type: 'POST',
                     url: '<?php echo Yii::app()->createUrl('user/getDistrictByProvince') ?>',
@@ -174,7 +192,7 @@
                 });
             }
         });
-        
+
         $(document).on('change', '#district', function (e) {
             e.preventDefault();
             var district_id = $(this).val();
@@ -182,6 +200,7 @@
                 $.ajax({
                     beforeSend: function (xhr) {
                         $('#ward').empty();
+                        $('#ward').append('<option value = "">Vui lòng chọn</option>');
                     },
                     type: 'POST',
                     url: '<?php echo Yii::app()->createUrl('user/getWardByDistrict') ?>',
