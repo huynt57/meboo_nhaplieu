@@ -42,7 +42,7 @@ class SiteController extends Controller
 			if(Yii::app()->request->isAjaxRequest)
 				echo $error['message'];
 			else
-                            var_dump ($error);
+                            var_dump ($error, true);
 				//$this->render('error', $error);
 		}
 	}
