@@ -18,6 +18,12 @@
  * @property string $last_updated
  * @property string $email
  * @property string $name
+ * @property string $description
+ * @property string $ward
+ * @property string $province
+ * @property string $district
+ * @property string $address
+ * @property string $phone
  *
  */
 abstract class BaseUser extends GxActiveRecord {
@@ -40,11 +46,12 @@ abstract class BaseUser extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('facebook_id, google_id, gender, photo', 'length', 'max'=>255),
+			array('facebook_id, google_id, gender, photo, ward, province, district, phone', 'length', 'max'=>255),
 			array('facebook_access_token', 'length', 'max'=>500),
 			array('last_updated, email, name', 'length', 'max'=>200),
-			array('facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name', 'safe', 'on'=>'search'),
+			array('description, address', 'safe'),
+			array('facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +76,12 @@ abstract class BaseUser extends GxActiveRecord {
 			'last_updated' => Yii::t('app', 'Last Updated'),
 			'email' => Yii::t('app', 'Email'),
 			'name' => Yii::t('app', 'Name'),
+			'description' => Yii::t('app', 'Description'),
+			'ward' => Yii::t('app', 'Ward'),
+			'province' => Yii::t('app', 'Province'),
+			'district' => Yii::t('app', 'District'),
+			'address' => Yii::t('app', 'Address'),
+			'phone' => Yii::t('app', 'Phone'),
 		);
 	}
 
@@ -84,6 +97,12 @@ abstract class BaseUser extends GxActiveRecord {
 		$criteria->compare('last_updated', $this->last_updated, true);
 		$criteria->compare('email', $this->email, true);
 		$criteria->compare('name', $this->name, true);
+		$criteria->compare('description', $this->description, true);
+		$criteria->compare('ward', $this->ward, true);
+		$criteria->compare('province', $this->province, true);
+		$criteria->compare('district', $this->district, true);
+		$criteria->compare('address', $this->address, true);
+		$criteria->compare('phone', $this->phone, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

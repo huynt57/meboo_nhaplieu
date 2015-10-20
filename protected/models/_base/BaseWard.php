@@ -9,11 +9,10 @@
  * Columns in table "tbl_ward" available as properties of the model,
  * and there are no model relations.
  *
- * @property string $wardid
- * @property string $name
- * @property string $type
- * @property string $location
- * @property string $districtid
+ * @property integer $id
+ * @property string $ward
+ * @property integer $district
+ * @property integer $province
  *
  */
 abstract class BaseWard extends GxActiveRecord {
@@ -31,16 +30,15 @@ abstract class BaseWard extends GxActiveRecord {
 	}
 
 	public static function representingColumn() {
-		return 'name';
+		return 'ward';
 	}
 
 	public function rules() {
 		return array(
-			array('wardid, name, type, location, districtid', 'required'),
-			array('wardid, districtid', 'length', 'max'=>5),
-			array('name', 'length', 'max'=>100),
-			array('type, location', 'length', 'max'=>30),
-			array('wardid, name, type, location, districtid', 'safe', 'on'=>'search'),
+			array('district, province', 'numerical', 'integerOnly'=>true),
+			array('ward', 'safe'),
+			array('ward, district, province', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, ward, district, province', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,22 +54,20 @@ abstract class BaseWard extends GxActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'wardid' => Yii::t('app', 'Wardid'),
-			'name' => Yii::t('app', 'Name'),
-			'type' => Yii::t('app', 'Type'),
-			'location' => Yii::t('app', 'Location'),
-			'districtid' => Yii::t('app', 'Districtid'),
+			'id' => Yii::t('app', 'ID'),
+			'ward' => Yii::t('app', 'Ward'),
+			'district' => Yii::t('app', 'District'),
+			'province' => Yii::t('app', 'Province'),
 		);
 	}
 
 	public function search() {
 		$criteria = new CDbCriteria;
 
-		$criteria->compare('wardid', $this->wardid, true);
-		$criteria->compare('name', $this->name, true);
-		$criteria->compare('type', $this->type, true);
-		$criteria->compare('location', $this->location, true);
-		$criteria->compare('districtid', $this->districtid, true);
+		$criteria->compare('id', $this->id);
+		$criteria->compare('ward', $this->ward, true);
+		$criteria->compare('district', $this->district);
+		$criteria->compare('province', $this->province);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

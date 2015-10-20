@@ -54,6 +54,19 @@ class UserController extends Controller {
         }
     }
 
+    public function actionAddPharmacy() {
+        $attr = StringHelper::filterArrayString($_POST);
+        $model = new Pharmacy();
+        $model->setAttributes($attr);
+        $model->created_at = time();
+        $model->updated_at = time();
+        if ($model->save(FALSE)) {
+            ResponseHelper::JsonReturnSuccess("", "Success");
+        } else {
+            ResponseHelper::JsonReturnError("", "Server Error");
+        }
+    }
+
     public function actionGetDistrictByProvince() {
         $request = Yii::app()->request;
         $province_id = $request->getPost('province_id');
@@ -74,6 +87,14 @@ class UserController extends Controller {
         $district = District::model()->findAll();
         $province = Province::model()->findAll();
         $this->render('input', array('ward' => $ward, 'district' => $district, 'province' => $province));
+    }
+
+    public function actionInputPharmacy() {
+        $this->checkLogin();
+        $ward = Ward::model()->findAll();
+        $district = District::model()->findAll();
+        $province = Province::model()->findAll();
+        $this->render('inputPharmacy', array('ward' => $ward, 'district' => $district, 'province' => $province));
     }
 
     // Uncomment the following methods and override them if needed
