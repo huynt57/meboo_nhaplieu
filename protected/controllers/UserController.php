@@ -58,8 +58,8 @@ class UserController extends Controller {
         $attr = StringHelper::filterArrayString($_POST);
         $model = new Pharmacy();
         $model->setAttributes($attr);
-        $model->created_at = time();
-        $model->updated_at = time();
+       // $model->created_at = time();
+        //$model->updated_at = time();
         if ($model->save(FALSE)) {
             ResponseHelper::JsonReturnSuccess("", "Success");
         } else {

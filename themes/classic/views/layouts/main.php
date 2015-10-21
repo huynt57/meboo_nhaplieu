@@ -59,7 +59,6 @@
                 FB.getLoginStatus(function (response) {
                     if (response.status === 'connected') {
                         console.log('Logged in.');
-
                     }
                 });
             };
@@ -72,8 +71,6 @@
                 js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.4&appId=1493872717557948";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-
-
 // Only works after `FB.init` is called
             function myFacebookLogin() {
                 FB.login(function () {
@@ -92,21 +89,21 @@
                                 photo: response.picture.data.url,
                             },
                             dataType: 'json',
-                            success: function(res) {
+                            success: function (res) {
                                 console.log(res);
                                 alert(res.status);
-                                if (res.status === 1) {                             
+                                if (res.status === 1) {
                                     window.location = "<?php echo Yii::app()->createAbsoluteUrl('user/input') ?>";
                                 }
                             },
-                            error: function(res) {
+                            error: function (res) {
                                 console.log(res);
                             }
                         });
                     }, {scope: 'publish_actions, public_profile, email'});
-                }
-
-                function myFacebookLogout() {
+                });
+            };
+            function myFacebookLogout() {
                 FB.logout(function (response) {
                     // user is now logged out
                 });
